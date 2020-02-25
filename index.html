@@ -1,0 +1,247 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Easy FRP</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+  </head>
+  <body>
+    <div class="container">
+        <div id="app">
+            <h3 class="title is-3">Easy FRP</h3>
+
+            <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                    <label class="label">Fiber volume fraction</label>
+                </div>
+                <div class="field-body">
+                    <div class="field has-addons">
+                        <p class="control">
+                            <input class="input" type="number" v-model="vf" >
+                        </p>
+                        <p class="control">
+                            <a class="button is-static">
+                            %
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        <div class="field is-horizontal">
+            <div class="field-label is-normal">
+                <label class="label">Fiber weight fraction</label>
+            </div>
+            <div class="field-body">
+                <div class="field has-addons">
+                    <p class="control">
+                        <input class="input" type="number" v-model="wf" >
+                    </p>
+                    <p class="control">
+                        <a class="button is-static">
+                        %
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="field is-horizontal">
+            <div class="field-label is-normal">
+                <label class="label">Fiber areal weight</label>
+            </div>
+            <div class="field-body">
+                <div class="field has-addons">
+                    <p class="control">
+                        <input class="input" type="number" v-model="faw" >
+                    </p>
+                    <p class="control">
+                        <a class="button is-static">
+                        g/m2
+                        </a>
+                    </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field is-horizontal">
+                <div class="field-label is-normal">            
+                    <label class="label">Resin areal weight</label>
+                </div>
+                <div class="field-body">
+                    <div class="field has-addons">
+                        <p class="control">
+                            <input class="input" type="number" v-model="raw" >
+                        </p>
+                        <p class="control">
+                            <a class="button is-static">
+                            g/m2
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                    <label class="label">Total areal weight</label>
+                </div>
+                <div class="field-body">
+                    <div class="field has-addons">
+                        <p class="control">
+                            <input class="input" type="number" v-model="taw" >
+                        </p>
+                        <p class="control">
+                            <a class="button is-static">
+                            g/m2
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                    <label class="label">Thickness</label>
+                </div>
+                <div class="field-body">
+                    <div class="field has-addons">
+                        <p class="control">
+                            <input class="input" type="number" v-model="thick" >
+                        </p>
+                        <p class="control">
+                            <a class="button is-static">
+                            mm
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                    <label class="label">Composite density</label>
+                </div>
+                <div class="field-body">
+                    <div class="field has-addons">
+                        <p class="control">
+                            <input class="input" type="number" v-model="rho" >
+                        </p>
+                        <p class="control">
+                            <a class="button is-static">
+                            g/cm3
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                    <label class="label">Fiber density</label>
+                </div>
+                <div class="field-body">
+                    <div class="field has-addons">
+                        <p class="control">
+                            <input class="input" type="number" v-model="crho" >
+                        </p>
+                        <p class="control">
+                            <a class="button is-static">
+                            g/cm3
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                    <label class="label">Resin density</label>
+                </div>
+                <div class="field-body">
+                    <div class="field has-addons">
+                        <p class="control">
+                            <input class="input" type="number" v-model="rrho" >
+                        </p>
+                        <p class="control">
+                            <a class="button is-static">
+                            g/cm3
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="field is-horizontal">
+                <div class="control">
+                    <button id="calcfrp" v-on:click="calcfrp" class="button is-dark">Calc</button>
+                </div>
+                <div class="control">
+                    <button id="calcfrp" v-on:click="reset" class="button is-dark">Reset</button>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+  </body>
+
+  <script type="text/javascript">
+    var app = new Vue({
+      el: '#app',
+      data: {
+        vf: 0.0,
+        wf: 0.0,
+        faw: 0.0,
+        raw: 0.0,
+        taw: 0.0,
+        thick: 0.0,
+        rho: 0.0,
+        crho: 1.8,
+        rrho: 1.2,
+      },
+
+      created: function() {
+      },
+
+      methods: {
+        calcfrp: function() {
+            if (!(this.vf > 0)) {
+                this.vf = 100 * this.wf / this.crho / (this.wf /  this.crho + (100 - this.wf) / this.rrho)
+            }
+            if (!(this.wf > 0)) {
+                this.wf = 100 * this.vf * this.crho / (this.vf * this.crho + (100 - this.vf) * this.rrho)
+            }
+            if (!(this.faw > 0)) {
+            }
+            if (!(this.raw > 0)) {
+                this.raw = this.faw / (this.wf / 100) - this.faw
+            }
+            if (!(this.taw > 0)) {
+                this.taw = parseFloat(this.faw) + parseFloat(this.raw)
+            }
+            if (!(this.thick > 0)) {
+                this.thick = this.faw / (this.vf / 100) / this.crho / 1000
+            }
+            if (!(this.rho > 0)) {
+                this.rho = this.crho * this.vf / 100 + this.rrho * (100 - this.vf) / 100
+            }
+            if (!(this.crho > 0)) {
+            }
+            if (!(this.rrho > 0)) {
+            }
+        },
+        reset: function() {
+            this.vf = 0
+            this.wf = 0
+            this.faw = 0
+            this.raw = 0
+            this.taw = 0
+            this.thick = 0
+            this.rho = 0
+            this.crho = 1.8
+            this.rrho = 1.2
+        },
+      }
+    })
+  </script>
+</html>
