@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Easy FRP</title>
+    <title>Easy FRP Calculator</title>
     <script src="https://cdn.jsdelivr.net/npm/vue"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
   </head>
@@ -11,7 +11,22 @@
     <section class="section">
     <div class="container">
         <div id="app">
-            <h3 class="title is-3">Easy FRP</h3>
+            <h3 class="title is-4">Easy FRP Calculator</h3>
+
+            <div class="field is-horizontal">
+                <div class="field-label is-normal">
+                </div>
+                <div class="field-body">
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button id="calcfrp" v-on:click="calcfrp" class="button">Calc</button>
+                        </div>
+                        <div class="control">
+                            <button id="calcfrp" v-on:click="reset" class="button">Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="field is-horizontal">
                 <div class="field-label is-normal">
@@ -172,15 +187,6 @@
                             </a>
                         </p>
                     </div>
-                </div>
-            </div>
-
-            <div class="field is-grouped">
-                <div class="control">
-                    <button id="calcfrp" v-on:click="calcfrp" class="button">Calc</button>
-                </div>
-                <div class="control">
-                    <button id="calcfrp" v-on:click="reset" class="button">Reset</button>
                 </div>
             </div>
 
