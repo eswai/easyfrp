@@ -230,6 +230,9 @@
             if (!(this.faw > 0)) {
                 this.faw = this.clean(this.taw - this.raw, 1)
             }
+            if (!(this.faw > 0)) {
+                this.faw = this.clean(this.thick * (this.vf / 100) * this.crho * 1000, 1)
+            }
             if (!(this.raw > 0)) {
                 this.raw = this.clean(this.faw / (this.wf / 100) - this.faw, 1)
             }
