@@ -255,7 +255,7 @@
             if (!(this.thick > 0)) {
                 this.thick = this.clean(this.faw / (this.vf / 100) / this.crho / 1000, 3)
             }
-            if (!(this.rho > 0)) {
+            if (!(this.rho > 0) && this.vf > 0) {
                 this.rho = this.clean(this.crho * this.vf / 100 + this.rrho * (100 - this.vf) / 100, 2)
             }
             if (!(this.crho > 0)) {
