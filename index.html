@@ -172,12 +172,12 @@
                 </div>
             </div>
 
-            <div class="field is-horizontal">
+            <div class="field is-grouped">
                 <div class="control">
-                    <button id="calcfrp" v-on:click="calcfrp" class="button is-dark">Calc</button>
+                    <button id="calcfrp" v-on:click="calcfrp" class="button">Calc</button>
                 </div>
                 <div class="control">
-                    <button id="calcfrp" v-on:click="reset" class="button is-dark">Reset</button>
+                    <button id="calcfrp" v-on:click="reset" class="button">Reset</button>
                 </div>
             </div>
             
@@ -204,31 +204,56 @@
       },
 
       methods: {
-        calcfrp: function() {
+        clean: function(x, d) {
+            if (x > 0 && x != Infinity) {
+                return x.toFixed(d)
+            } else {
+                return 0
+            }
+        },
+        calcprop: function() {
             if (!(this.vf > 0)) {
-                this.vf = 100 * this.wf / this.crho / (this.wf /  this.crho + (100 - this.wf) / this.rrho)
+                this.vf = this.clean(100 * this.wf / this.crho / (this.wf /  this.crho + (100 - this.wf) / this.rrho), 2)
             }
             if (!(this.wf > 0)) {
-                this.wf = 100 * this.vf * this.crho / (this.vf * this.crho + (100 - this.vf) * this.rrho)
+                this.wf = this.clean(100 * this.vf * this.crho / (this.vf * this.crho + (100 - this.vf) * this.rrho), 2)
+            }
+            if (!(this.wf > 0)) {
+                this.wf = this.clean(this.faw / this.taw * 100, 2)
             }
             if (!(this.faw > 0)) {
+                this.faw = this.clean(this.raw / (1 - this.wf / 100) - this.raw, 1)
+            }
+            if (!(this.faw > 0)) {
+                this.faw = this.clean(this.taw * this.wf / 100, 1)
+            }
+            if (!(this.faw > 0)) {
+                this.faw = this.clean(this.taw - this.raw, 1)
             }
             if (!(this.raw > 0)) {
-                this.raw = this.faw / (this.wf / 100) - this.faw
+                this.raw = this.clean(this.faw / (this.wf / 100) - this.faw, 1)
+            }
+            if (!(this.raw > 0)) {
+                this.raw = this.clean(this.taw * (1 - this.wf / 100), 1)
             }
             if (!(this.taw > 0)) {
-                this.taw = parseFloat(this.faw) + parseFloat(this.raw)
+                this.taw = this.clean(parseFloat(this.faw) + parseFloat(this.raw), 1)
             }
             if (!(this.thick > 0)) {
-                this.thick = this.faw / (this.vf / 100) / this.crho / 1000
+                this.thick = this.clean(this.faw / (this.vf / 100) / this.crho / 1000, 3)
             }
             if (!(this.rho > 0)) {
-                this.rho = this.crho * this.vf / 100 + this.rrho * (100 - this.vf) / 100
+                this.rho = this.clean(this.crho * this.vf / 100 + this.rrho * (100 - this.vf) / 100, 2)
             }
             if (!(this.crho > 0)) {
             }
             if (!(this.rrho > 0)) {
             }
+        }, 
+        calcfrp: function() {
+            this.calcprop()
+            this.calcprop()
+            this.calcprop()
         },
         reset: function() {
             this.vf = 0
