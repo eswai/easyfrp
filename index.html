@@ -225,6 +225,9 @@
             if (!(this.vf > 0)) {
                 this.vf = this.clean(100 * this.wf / this.crho / (this.wf /  this.crho + (100 - this.wf) / this.rrho), 2)
             }
+            if (!(this.vf > 0) && this.rho > 0) {
+                this.vf = this.clean((parseFloat(this.rho) - parseFloat(this.rrho)) / (this.crho - this.rrho) * 100, 2)
+            }
             if (!(this.wf > 0)) {
                 this.wf = this.clean(100 * this.vf * this.crho / (this.vf * this.crho + (100 - this.vf) * this.rrho), 2)
             }
